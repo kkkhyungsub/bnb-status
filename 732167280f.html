@@ -63,7 +63,7 @@
   footer { margin-top: 20px; font-size: 12px; color: #97968D; line-height: 1.6; text-align: center; }
 
   /* PC 화면(768px 이상)에서는 좁은 모바일 목록형 대신 넓은 2열 카드 그리드로 표시
-     (2026-08-20 — 모바일/PC 화면을 다르게 보여달라는 요청으로 추가). */
+     (2026-08-20 - 모바일/PC 화면을 다르게 보여달라는 요청으로 추가). */
   @media (min-width: 768px) {
     .wrap { max-width: 900px; }
     .cat-btns { display: flex; flex-direction: row; flex-wrap: wrap; }
@@ -71,7 +71,7 @@
     .card-grid, .cat-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     /* 카드 크기는 기존(330px)의 3/4 수준으로, 글자 크기는 원래(모바일과 동일) 크기로 유지
        (2026-08-20). 지원내용만 2줄로 다시 늘려달라는 요청(2026-08-20)으로 높이를 살짝
-       (248→270px) 더 늘려서 늘어난 줄이 잘리지 않게 함 — 모집대상은 계속 1줄 유지. */
+       (248→270px) 더 늘려서 늘어난 줄이 잘리지 않게 함 - 모집대상은 계속 1줄 유지. */
     .card { margin-bottom: 0; height: 270px; box-sizing: border-box; overflow: hidden;
       display: flex; flex-direction: column; padding: 10px 12px; }
     .card .card-top { margin-bottom: 5px; }
