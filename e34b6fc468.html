@@ -6,137 +6,388 @@
 <meta name="robots" content="noindex, nofollow">
 <title>(주)행사의신 대표님 - 지원사업 현황 | BnB컨설팅</title>
 <meta property="og:title" content="(주)행사의신 지원사업 매칭 현황">
-<meta property="og:description" content="매칭된 지원사업 8건, 마감임박 4건 확인하기">
+<meta property="og:description" content="이번 주 신규 지원사업 10건, 마감임박 6건 확인하기">
 <style>
   :root { color-scheme: light; }
   * { box-sizing: border-box; }
-  body { margin: 0; padding: 24px 16px 48px; background: #F5F4EF; color: #232320;
+  body { margin: 0; padding: 24px 16px 48px; background: #FFFFFF; color: #232320;
     font-family: -apple-system, "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif; }
   .wrap { max-width: 480px; margin: 0 auto; }
   header { margin-bottom: 16px; }
   header p.name { margin: 0; font-size: 18px; font-weight: 600; }
   header p.sub { margin: 4px 0 0; font-size: 13px; color: #6B6A63; }
   .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-  .stat { background: #FFFFFF; border-radius: 10px; padding: 12px 14px; }
+  .stat { background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 10px; padding: 12px 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
   .stat .num { font-size: 20px; font-weight: 600; }
   .stat .lbl { font-size: 12px; color: #6B6A63; margin-top: 2px; }
-  .stat.warn .num { color: #A3651A; }
-  .card { background: #FFFFFF; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
-  .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+  .stat.warn .num { color: #185FA5; }
+  .tabs { display: flex; gap: 6px; margin-bottom: 14px; }
+  .tab-btn { flex: 1; padding: 10px; border: 1px solid #E5E5E5; border-radius: 10px; background: #FFFFFF;
+    color: #6B6A63; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .tab-btn.active { background: #185FA5; color: #FFFFFF; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .cat-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 14px; }
+  .cat-btn { width: 100%; display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; border: 1px solid #E5E5E5; border-radius: 10px;
+    background: #FFFFFF; color: #5F5E5A; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .cat-btn.active { background: #185FA5; border-color: #185FA5; color: #FFFFFF; }
+  .cat-btn-count { font-weight: 400; opacity: 0.85; font-size: 11px; }
+  .cat-panel { display: none; }
+  .cat-panel.active { display: block; }
+  .card { background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 12px; padding: 14px 16px;
+    margin-bottom: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+  .card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
   .card .title { margin: 0; font-size: 14px; font-weight: 600; line-height: 1.4; }
+  .card .org { margin: 3px 0 10px; font-size: 12px; color: #97968D; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .tag { font-size: 11px; padding: 3px 9px; border-radius: 20px; background: #EDEDED; color: #5F5E5A; }
+  .dday { font-size: 12px; font-weight: 700; padding: 4px 11px; border-radius: 20px; white-space: nowrap; }
+  .dday-urgent { background: #185FA5; color: #FFFFFF; }
+  .dday-normal { background: #E6F1FB; color: #185FA5; }
+  .dday-none { background: #EDEDED; color: #5F5E5A; }
+  .dday-closed { background: #EDEDED; color: #97968D; }
   .badge { font-size: 11px; padding: 3px 8px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
   .badge-warn { background: #FAEEDA; color: #854F0B; }
   .badge-accent { background: #E6F1FB; color: #185FA5; }
-  .badge-neutral { background: #F1EFE8; color: #5F5E5A; }
-  .row { margin: 0 0 4px; font-size: 13px; line-height: 1.5; color: #3A3A36; }
-  .row .label { display: inline-block; min-width: 62px; color: #97968D; font-size: 12px; }
-  .row.clamp { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .apply { display: inline-block; margin-top: 6px; font-size: 13px; color: #185FA5; text-decoration: none; }
+  .badge-neutral { background: #EDEDED; color: #5F5E5A; }
+  .badge-faint { background: #EDEDED; color: #97968D; }
+  .row { display: flex; gap: 6px; margin: 0 0 4px; font-size: 13px; line-height: 1.5; color: #3A3A36; }
+  .row .label { flex-shrink: 0; min-width: 62px; color: #97968D; font-size: 12px; }
+  .row .value { flex: 1; min-width: 0; }
+  .row .value.clamp { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .apply { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px;
+    margin-top: 8px; border-radius: 50%; background: #185FA5; text-decoration: none; }
   .empty { text-align: center; color: #6B6A63; font-size: 13px; padding: 32px 0; }
   footer { margin-top: 20px; font-size: 12px; color: #97968D; line-height: 1.6; text-align: center; }
+
+  /* PC 화면(768px 이상)에서는 좁은 모바일 목록형 대신 넓은 2열 카드 그리드로 표시
+     (2026-08-20 — 모바일/PC 화면을 다르게 보여달라는 요청으로 추가). */
+  @media (min-width: 768px) {
+    .wrap { max-width: 900px; }
+    .cat-btns { display: flex; flex-direction: row; flex-wrap: wrap; }
+    .cat-btn { width: auto; }
+    .card-grid, .cat-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    /* 카드 크기는 기존(330px)의 3/4 수준으로, 글자 크기는 원래(모바일과 동일) 크기로 유지
+       (2026-08-20). 지원내용만 2줄로 다시 늘려달라는 요청(2026-08-20)으로 높이를 살짝
+       (248→270px) 더 늘려서 늘어난 줄이 잘리지 않게 함 — 모집대상은 계속 1줄 유지. */
+    .card { margin-bottom: 0; height: 270px; box-sizing: border-box; overflow: hidden;
+      display: flex; flex-direction: column; padding: 10px 12px; }
+    .card .card-top { margin-bottom: 5px; }
+    .card .title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card .org { margin: 2px 0 6px; }
+    .card .tags { gap: 4px; margin-bottom: 6px; }
+    .card .row { margin: 0 0 2px; }
+    .card .value.target { -webkit-line-clamp: 1; }
+    .card .value.content { -webkit-line-clamp: 2; }
+    .card .apply { margin-top: auto; }
+  }
 </style>
 </head>
 <body>
   <div class="wrap">
     <header>
       <p class="name">(주)행사의신 대표님</p>
-      <p class="sub">지원사업 현황 · 2026-08-13 기준</p>
+      <p class="sub">지원사업 현황 · 2026-08-20 기준</p>
     </header>
     <div class="stats">
       <div class="stat">
-        <div class="num">8건</div>
-        <div class="lbl">매칭된 지원사업</div>
+        <div class="num">10건</div>
+        <div class="lbl">이번 주 신규 지원사업</div>
       </div>
       <div class="stat warn">
-        <div class="num">4건</div>
+        <div class="num">6건</div>
         <div class="lbl">마감임박(7일 이내)</div>
       </div>
     </div>
-    
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="rank" onclick="bnbSwitchTab('rank')">매칭율 높은 순</button>
+      <button class="tab-btn" data-tab="category" onclick="bnbSwitchTab('category')">카테고리별</button>
+    </div>
+    <div id="panel-rank" class="panel active">
+      <div class="card-grid">
       <div class="card">
-        <div class="card-head">
-          <p class="title">2026 콘텐츠IP 마켓 참가기업 모집</p>
-          <span class="badge badge-warn">마감임박</span>
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-accent">매칭율 100%</span>
         </div>
-        <p class="row"><span class="label">신청기간</span>2026-07-15 ~ 2026-08-19</p>
-        <p class="row clamp"><span class="label">모집대상</span>상세 공고 확인 필요</p>
-        <p class="row clamp"><span class="label">지원내용</span>행사개요:ㅇ 행 사 명: 2026 콘텐츠IP 마켓 (CONTENT IP MARKET 2026) ㅇ 기간/장소: 2026. 12. 2.(수) ~ 12. 4.(금) / 서울 코엑스 B홀 ㅇ 주최/주관: 문화체육관광부 / 한국콘텐츠진흥원 ㅇ 행사성격: 콘텐츠 전 장르 종합 IP 비즈니스 마켓(B2B) ㅇ 주요내용: 1:1 비즈니스 미팅, 전시, 세미나, 피칭 등 모집개요:ㅇ 모집기간: 7. 15(수) ~ 8. 19(수) 11:00까지 ㅇ 지원규모: 총 80개사 ㅇ 지원대상: 콘텐츠 IP 라이선싱, 기획, 제작, 유통 등 관련 비즈니스를 희망하는 기업 - 신청자격: 콘텐츠 IP/판권 또는 협상권을 보유하여 직접 비즈니스 상담이 가능한 기업, 대기업/중견기업/중소기업 등 법인/개인사업자 - 모집분야: 웹툰, 출판, 게임, 방송, 캐릭터 등 콘텐츠 전 분야 IP - 참여제한 대상: 공공기관, 비영리법인 등 콘텐츠 IP/판권 또는 협상권을 직접 보유하지 않은 단체 지원내용:ㅇ 1:1 비즈니스 상담 지원 - 기업별 비즈니스 상담 공간(1개 부스) - 사전 및 현장 비즈매칭 - 종합 디렉토리북 등 공동 홍보물 제작 - (요청 시) 비즈니스 상담 통역 지원 ㅇ 기타 비즈니스…</p>
-        <a class="apply" href="https://www.kocca.kr/kocca/pims/view.do?intcNo=326D00091012&amp;menuNo=204104" target="_blank" rel="noopener">신청 바로가기 →</a>
+        <p class="title">2026년 4차 콘텐츠 제작 지원사업 참여기업 모집 공고</p>
+        <p class="org">한국중소벤처기업유통원</p>
+        <div class="tags"><span class="tag">기타</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">소상공인</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">소상공인의 온라인시장 진출 및 판로개척 지원을 위한「2026 콘텐츠 제작 지원사업」을 다음과 같이 공고하오니, 소상공인의 많은 참여를 바랍니다. ☞ 온라인으로 상품 판매 또는 서비스 예약을 제공하는 소상공인 ☞ 제품 소개 및 홍보 등을 위한 영상 등 콘텐츠 제작지원 - 소구조사, 콘텐즈 제작, 패키지 제공, A/S지원, AI구독권, 실습프로그램 지원</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125509" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
       </div>
       <div class="card">
-        <div class="card-head">
-          <p class="title">2026 대한민국 콘텐츠대상(애니메이션)  국민심사위원 모집 공고</p>
-          <span class="badge badge-neutral">신규발굴</span>
+        <div class="card-top">
+          <span class="dday dday-normal">D-10</span>
+          <span class="badge badge-neutral">매칭율 58%</span>
         </div>
-        <p class="row"><span class="label">신청기간</span>2026-07-31 ~ 2026-08-31</p>
-        <p class="row clamp"><span class="label">모집대상</span>상세 공고 확인 필요</p>
-        <p class="row clamp"><span class="label">지원내용</span>1.시상개요:ㅇ (시상목적) 장르별 우수 콘텐츠 발굴시상을 통한 창작의욕 고취로 지속적 산업발전 역량 도모 ㅇ (시상부문) 애니메이션 부문 5점 - 대통령상 (1점) : 7백만원 - 문화체육관광부장관상(3점) : 각 2.5백만원 - 한국콘텐츠진흥원장상(1점) : 1.5백만원 ㅇ (주최/주관) 문화체육관광부/한국콘텐츠진흥원 ㅇ 후보작 선정절차 - 1단계: 후보작 1차 심사(2배수 선정)_국민심사 20% 반영 - 2단계: 후보작 2차 심사(훈격 및 예비후보 결정) - 3단계: 대국민 공개 검증(홈페이지 게시) - 4단계: 수상작 확정(문화체육관광부) ※ 세부내용은 공고 하단의 ‘공고관련 자료확인’ 버튼을 클릭 첨부된 공고문 참고하시기 바랍니다. 2. 국민심사위원 모집:ㅇ 공고명: 「2026년 대한민국 콘텐츠대상 (애니메이션)」정부시상 국민심사 위원 모집 ㅇ 자격요건: 애니메이션에 관심 있는 애니메이션관련학과 대학생 및 협회 교육생 ㅇ 모집인원: 총15명 내외 ※ 세부내용은 공고 하단의 ‘공고관련 자료확인’ 버튼을 클릭 첨부된 공고문 참고하시기 바랍니다. 3. 국민 심사위원 선정 방식:ㅇ 심사위원 선정절차: 접수 → 접수번호 추첨 → e메일 개별 알림(OT) →…</p>
-        <a class="apply" href="https://www.kocca.kr/kocca/pims/view.do?intcNo=326D00037012&amp;menuNo=204104" target="_blank" rel="noopener">신청 바로가기 →</a>
+        <p class="title">2026년 KOMICS Thailand 참가기업 모집 공고</p>
+        <p class="org">한국콘텐츠진흥원</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-13 ~ 2026-08-31</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">중소기업</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">태국을 거점으로 동남아시아 주요 시장(싱가포르, 인도네시아, 말레이시아, 베트남, 필리핀 등) 진출(수출)을 위한 만화웹툰 특화 해외진출 지원 프로그램 운영하고자 '2026 KOMICS Thailand 참가기업 모집 공고'에 참여할 만화웹툰기업을 모집합니다. ☞ 태국을 거점으로 동남아시아 주요 시장(싱가포르, 인도네시아, 말레이시아, 베트남, 필리핀 등) 진출 목적이 명확한 국내 만화ㆍ웹툰 IP 보유 기업 또는 해외 비즈니스 권한을 위임받은 에이전시 - 플랫폼 유통 및 출판, 영상화, 게임, MD 등 확장 산업 전반에 걸쳐 동남아시아 시장 진출의 참여 목적이 명확한 기업 ※ 자세한 지원대상 공고문 참조 ☞ 비즈니스, 홍보마케팅, 기타(숙박) 등 지원 ※ 자세한 지원내용 공고문 참조</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125479" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
       </div>
       <div class="card">
-        <div class="card-head">
-          <p class="title">2026 예술기업 상생혁신(오픈이노베이션) 지원사업 참여기업 공모</p>
-          <span class="badge badge-warn">마감임박</span>
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-neutral">매칭율 42%</span>
         </div>
-        <p class="row"><span class="label">신청기간</span>2026-08-06 ~ 2026-08-20</p>
-        <p class="row clamp"><span class="label">모집대상</span>공고일 기준(&amp;apos;26.08.06.(목)) 업력 10년 이내의 예술분야 창업기업(개인 및 법인사업자)</p>
-        <p class="row clamp"><span class="label">지원내용</span>상세 공고 확인 필요</p>
-        <a class="apply" href="https://www.k-startup.go.kr/web/contents/bizpbanc-ongoing.do?schM=view&amp;pbancSn=178857" target="_blank" rel="noopener">신청 바로가기 →</a>
+        <p class="title">2026년 해외 온라인플랫폼 활용지원 소상공인 모집 공고 2차</p>
+        <p class="org"></p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">상세 공고 확인 필요</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">2026년 「해외 온라인 플랫폼 활용지원」 사업 참여 소상공인 모집 공고(2차) 해외 온라인 플랫폼 활용 소상공인의 온라인 수출액 증대를 위해 2026년 '해외 온라인 플랫폼 활용지원' 사업에 참여할 소상공인을 모집합니다. □ 지원내용 : 해외 온라인 플랫폼 홍보·마케팅 지원 및 우수 소상공인 O2O기획전 지원 □ 지원대상 : 해외 온라인 플랫폼(아마존, 쇼피, 큐텐재팬)에 입점되어 있는 소상공인 * 단, 플랫폼에서 발생한 전년도 매출액에 따라 지원 내용 구분 □ 지원규모 : 소상공인 1,300개사 내외 - 수행기관(플랫폼)별 430개사 내외 □ 신청서류 : 모집공고 참조(5P 확인) 2026년 8월 14일 소상공인시장진흥공단 이사장 ※ 문의처 ※ - 수행기관(플랫폼) 문의처 수행기관 지원 플랫폼 문의처 굿먼데이 아마존 010-8051-8699 amz@goodmonday.me 오스브이 쇼피 031-8027-3997 support@osv81.com ESG경영지원센터 큐텐 재팬 1600-0712 help@esgbsc.com - 기타 사업문의 : 042-363-7825~6 - 시스템 문의(오류 등) : 1644-5302</span></p>
+        <a class="apply" href="https://www.sbiz24.kr/#/pbanc/812" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
       </div>
       <div class="card">
-        <div class="card-head">
-          <p class="title">2026년 4차 예술산업 금융지원 시범사업(융자) 연장 공고</p>
-          <span class="badge badge-warn">마감임박</span>
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-neutral">매칭율 42%</span>
         </div>
-        <p class="row"><span class="label">신청기간</span>2026-08-03 ~ 2026-08-21</p>
-        <p class="row clamp"><span class="label">모집대상</span>공고일 기준 사업자등록증을 보유한 예술 분야 사업자 (민간예술시설업체, 예술서비스업체) / 시설자금(자산취득), 운전자금(비용지출) 지원</p>
-        <p class="row clamp"><span class="label">지원내용</span>문화체육관광부와 예술경영지원센터는 예술 분야 사업자를 대상으로 저리의 융자 자금 공급을 통해 예술산업의 지속가능한 성장 및 미래 경쟁력을 제고하고자 &lt;2026 예술산업 금융지원 시범사업(융자) 4차 공모&gt;를 진행합니다. 관심 있는 예술 분야 사업자의 많은 참여 바랍니다. ☞ 공고일 기준 사업자등록증을 보유한 예술 분야 사업자 (민간예술시설업체, 예술서비스업체) ※ 자세한 지원대상 공고문 참조 ☞ 시설자금(자산취득), 운전자금(비용지출) 지원 ※ 자세한 지원내용 공고문 참조</p>
-        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000124963" target="_blank" rel="noopener">신청 바로가기 →</a>
+        <p class="title">2026년 2차 해외 온라인플랫폼 활용지원 사업 참여 소상공인 모집 공고</p>
+        <p class="org">소상공인시장진흥공단</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">소상공인</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">해외 온라인 플랫폼 활용 소상공인의 온라인 수출액 증대를 위해 ’26년「해외 온라인 플랫폼 활용지원」사업 참여 소상공인을 모집합니다. ☞ 「소상공인 기본법」제2조에 따른 소상공인으로 신청일 기준 정상적으로 영업 중이며, 활용을 희망하는 해외 온라인 플랫폼(아마존, 쇼피, 큐텐재팬)에 旣 입점한 소상공인 ☞ 해외 온라인 플랫폼 홍보ㆍ마케팅 및 O2O 기획전 지원 ① (홍보ㆍ마케팅 지원) 총 4,375,000원(자부담 포함, 부가세 제외) 한도 내, 플랫폼 광고비ㆍ기획전 운영 및 간접홍보ㆍ컨설팅 등 지원 ② (O2O 기획전) 동 사업 수혜 업체 중, 우수성과 소상공인을 선별하여 O2O 기획전 참여 연계 지원</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125502" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
       </div>
       <div class="card">
-        <div class="card-head">
-          <p class="title">2026년 예술기업 상생혁신(오픈이노베이션) 지원사업 공고</p>
-          <span class="badge badge-warn">마감임박</span>
+        <div class="card-top">
+          <span class="dday dday-normal">D-21</span>
+          <span class="badge badge-faint">매칭율 25%</span>
         </div>
-        <p class="row"><span class="label">신청기간</span>2026-08-06 ~ 2026-08-20</p>
-        <p class="row clamp"><span class="label">모집대상</span>창업벤처</p>
-        <p class="row clamp"><span class="label">지원내용</span>문화체육관광부와 (재)예술경영지원센터는 예술분야 창업기업의 창의적인 아이디어와 전문 역량을 바탕으로 대ㆍ중견기업과의 개방형 혁신(Open Innovation) 협업을 촉진하고, 협업 과제의 실행부터 사업화 검증(PoC)까지 단계별로 지원하는 &lt;2026 예술기업 상생혁신(오픈이노베이션) 지원사업&gt;을 추진합니다. 예술 전문성과 적극적인 실행역량을 갖춘 예술분야 창업기업을 다음과 같이 모집하오니 많은 관심과 참여 바랍니다. ☞ 업력 10년 이내 예술분야 창업기업 ※ 자세한 지원대상 공고문 참조 ☞ 대ㆍ중견기업과 1:1 매칭 및 협업 기회 지원 - 협업과제 사업화 검증(PoC) 지원금 지원 - 협업 과정 내 전담 모더레이터 및 전문 컨설턴트 지원 - 사업 홍보ㆍ마케팅, 네트워킹, 성과공유회 등을 통한 기업 홍보 기회 제공 - 성과 확산 등 선정기업 후속 지원</p>
-        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125227" target="_blank" rel="noopener">신청 바로가기 →</a>
+        <p class="title">2026년 AI무역인재양성 사업 2기 기업</p>
+        <p class="org">AI마케팅팀</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-09-11</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">상세 공고 확인 필요</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">상세 공고 확인 필요</span></p>
+        <a class="apply" href="https://www.kotra.or.kr/subList/20000020753/subhome/bizAply/selectBizMntInfoDetail.do?&amp;dtlBizMntNo=26ED00N&amp;cpbizYn=N" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
       </div>
       <div class="card">
-        <div class="card-head">
-          <p class="title">2026년 콘텐츠 수출보증 공고</p>
-          <span class="badge badge-neutral">신규발굴</span>
+        <div class="card-top">
+          <span class="dday dday-normal">D-21</span>
+          <span class="badge badge-faint">매칭율 25%</span>
         </div>
-        <p class="row"><span class="label">신청기간</span>상시/수시</p>
-        <p class="row clamp"><span class="label">모집대상</span>상세 공고 확인 필요</p>
-        <p class="row clamp"><span class="label">지원내용</span>[공고 제2026-0050호] 2026년 콘텐츠 수출보증 공고 수출보증 개요 | 구분, 신청대상자금, 보증한도, 보증기간으로 구분되는 표 구분 신청대상자금 보증한도 콘텐츠 수출보증 콘텐츠 수출 자금 최대 10억원 한국콘텐츠진흥원과 한국무역보험공사가 함께 협력하여 진행하는 콘텐츠 수출보증제도와 관련하여 다음과 같은 사항을 먼저 안내드리오니 유의부탁드립니다. ① 수출보증의 평가개시는 기업 신청(시스템 입력 및 서류 제출) 후 진흥원의 확인을 거쳐 ‘접수완료 메일’을 수신한 이후 진행됨 을 알려드립니다. - 신청서류가 미비할 경우 접수가 되지 않습니다. ② 추천심사를 거쳐 추천되더라도 보증심사결과(한국무역보험공사)에 따라 보증취급이 불가할 수 있음을 알려드립니다. ③ 자본잠식 또는 최근 3년 연속 당기순손실인 기업 은 신청 불가하오니 사전확인 및 반드시 상담 후 신청 해 주시기 바랍니다. *한국무역보험공사(☏ 02-399-6964,7093) ④ 본 사업 선정기업이 지원받은 자금을 상환하지 않은 상태에서 휴업 및 폐업(사실상의 조업중단 포함, 이하 동일)하는 경우, 한국신용정보원(舊 은행연합회) 등에 해당 사실이 등록 되며(전 금융기관 해당사실 공유), 한국무역보험…</p>
-        <a class="apply" href="https://www.kocca.kr/kocca/bbs/view/B0158960/2010734.do?bbsId=B0158960&amp;menuNo=204392" target="_blank" rel="noopener">신청 바로가기 →</a>
+        <p class="title">2026년 AI무역인재양성 사업 2기_청년</p>
+        <p class="org">AI마케팅팀</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-09-11</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">상세 공고 확인 필요</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">상세 공고 확인 필요</span></p>
+        <a class="apply" href="https://www.kotra.or.kr/subList/20000020753/subhome/bizAply/selectBizMntInfoDetail.do?&amp;dtlBizMntNo=26ED00M&amp;cpbizYn=N" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
       </div>
       <div class="card">
-        <div class="card-head">
-          <p class="title">2025년 3월 문화산업 완성보증 공고</p>
-          <span class="badge badge-neutral">신규발굴</span>
+        <div class="card-top">
+          <span class="dday dday-normal">D-31</span>
+          <span class="badge badge-faint">매칭율 25%</span>
         </div>
-        <p class="row"><span class="label">신청기간</span>상시/수시</p>
-        <p class="row clamp"><span class="label">모집대상</span>상세 공고 확인 필요</p>
-        <p class="row clamp"><span class="label">지원내용</span>[공고 제2025-0091호] 2025년 3월 문화산업 완성보증 공고 한국콘텐츠진흥원과 신용보증기금·기술보증기금이 협력하여 진행하는 문화산업 완성보증에 신청할 기업을 모집합니다. 공고문과 유의사항을 숙지하신 후 신청해주시기 바랍니다. ① 콘진원 콘텐츠보증 추천심사는 기업신청(시스템 입력 및 서류제출) 후, 콘진원이 필수서류 제출여부를 검토하여 접수처리 한 후 진행됩니다. ‘접수완료’ 메일을 수신한 경우에만 접수가 유효하며, 필수서류가 미비한 경우 신청 철회 혹은 비추천될 수 있습니다. ② 콘진원 추천심사에서 ‘비추천’ 된 프로젝트는 결과통지 후 6개월 이내 콘텐츠보증 재신청이 불가 합니다. ③ 콘진원 추천심사에서 ‘추천’ 된 프로젝트는 추후 동일 프로젝트로 콘텐츠보증 재신청이 불가합니다. ④ 콘진원으로부터 추천되더라도 보증기관의 심사결과에 따라 보증취급이 불가할 수 있습니다. ⑤ 본 사업 선정기업이 지원받은 자금을 상환하지 않은 상태에서 휴업 및 폐업(사실상의 조업중단 포함, 이하 동일)하는 경우, 한국신용정보원(舊 은행연합회) 등에 해당 사실이 등록되며(전 금융기관 해당사실 공유), 보증기관으로부터 구상권이 청구될 수 있음을 알려드립니다. 또한, 본 사업과…</p>
-        <a class="apply" href="https://www.kocca.kr/kocca/bbs/view/B0158960/2007872.do?bbsId=B0158960&amp;menuNo=204392" target="_blank" rel="noopener">신청 바로가기 →</a>
+        <p class="title">2026 생성형 AI로 구축하는 글로벌 마케팅 온라인 과정(2차)</p>
+        <p class="org">KOTRA아카데미</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-13 ~ 2026-09-21</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">상세 공고 확인 필요</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">상세 공고 확인 필요</span></p>
+        <a class="apply" href="https://www.kotra.or.kr/subList/20000020753/subhome/bizAply/selectBizMntInfoDetail.do?&amp;dtlBizMntNo=26ED00E&amp;cpbizYn=N" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
       </div>
       <div class="card">
-        <div class="card-head">
-          <p class="title">2025년 2월 문화산업 완성보증 공고</p>
-          <span class="badge badge-neutral">신규발굴</span>
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-faint">매칭율 25%</span>
         </div>
-        <p class="row"><span class="label">신청기간</span>상시/수시</p>
-        <p class="row clamp"><span class="label">모집대상</span>상세 공고 확인 필요</p>
-        <p class="row clamp"><span class="label">지원내용</span>[공고 제2025-0022호] 2025년 2월 문화산업 완성보증 공고 한국콘텐츠진흥원과 신용보증기금·기술보증기금이 협력하여 진행하는 문화산업 완성보증에 신청할 기업을 모집합니다. 공고문과 유의사항을 숙지하신 후 신청해주시기 바랍니다. ① 콘진원 콘텐츠보증 추천심사는 기업신청(시스템 입력 및 서류제출) 후, 콘진원이 필수서류 제출여부를 검토하여 접수처리 한 후 진행됩니다. ‘접수완료’ 메일을 수신한 경우에만 접수가 유효하며, 필수서류가 미비한 경우 신청 철회 혹은 비추천될 수 있습니다. ② 콘진원 추천심사에서 ‘비추천’ 된 프로젝트는 결과통지 후 6개월 이내 콘텐츠보증 재신청이 불가 합니다. ③ 콘진원 추천심사에서 ‘추천’ 된 프로젝트는 추후 동일 프로젝트로 콘텐츠보증 재신청이 불가합니다. ④ 콘진원으로부터 추천되더라도 보증기관의 심사결과에 따라 보증취급이 불가할 수 있습니다. ⑤ 본 사업 선정기업이 지원받은 자금을 상환하지 않은 상태에서 휴업 및 폐업(사실상의 조업중단 포함, 이하 동일)하는 경우, 한국신용정보원(舊 은행연합회) 등에 해당 사실이 등록되며(전 금융기관 해당사실 공유), 보증기관으로부터 구상권이 청구될 수 있음을 알려드립니다. 또한, 본 사업과…</p>
-        <a class="apply" href="https://www.kocca.kr/kocca/bbs/view/B0158960/2007682.do?bbsId=B0158960&amp;menuNo=204392" target="_blank" rel="noopener">신청 바로가기 →</a>
+        <p class="title">2026년 일본 오사카(간사이) 지역 진출 지원사업 Plug in Osaka #12 참가 스타트업 모집 공고</p>
+        <p class="org">부산창조경제혁신센터</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">창업벤처</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">(재)부산창조경제혁신센터에서는 국내 유망한 스타트업의 일본 간사이 지역 진출 및 현지 대ㆍ중견기업과의 1:1 밋업 기회 등을 제공하기 위해 「Plug in: Osaka #12」에 참여할 기업을 아래와 같이 모집하오니, 많은 관심과 참여 바랍니다. ☞ 일본(간사이) 진출을 희망하는 스타트업 - (전국 소재) 전국 소재 라이프사이언스 분야 스타트업 - (부산 소재) 부산 소재(본사, 지사, 연구소 등) 사업장을 보유한 라이프사이언스 분야 스타트업 - (모집분야) 라이프 사이언스(Life Sciences) ※ 자세한 지원대상 공고문 참조 ☞ 라이프 사이언스 분야 간사이 대ㆍ중견기업 및 CVC 대상 IR 피칭, 밋업, KBIC 연계 비즈니스 네트워킹, GSE 참관 등 지원 - 기업당 1인 왕복 항공료 실비 지원(최대 40만원), GSE 입장권(1개사/1매), 센터 투자ㆍ글로벌 진출 지원사업 등 후속 연계 지원</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125548" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
       </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-faint">매칭율 25%</span>
+        </div>
+        <p class="title">2026년 4차 상세페이지 제작지원사업 참여기업 모집 공고</p>
+        <p class="org">한국중소벤처기업유통원</p>
+        <div class="tags"><span class="tag">기타</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">소상공인</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">소상공인의 온라인시장 진출 및 판로개척 지원을 위한「2026년 상세페이지 제작지원사업」을 다음과 같이 공고 하오니, 많은 참여를 바랍니다. ☞ 소상공인이 보유한 온라인 판매가 가능한 B2C 상품 ☞ 진단 및 컨설팅, 사진 촬영, 소상공인 제품의 특장점을 반영한 상세페이지 제작 등 지원</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125512" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-faint">매칭율 25%</span>
+        </div>
+        <p class="title">2026년 4차 소상공인 상품개선 지원사업(패키지ㆍ브랜드 디자인 개선ㆍ제작) 모집 공고</p>
+        <p class="org">한국중소벤처기업유통원</p>
+        <div class="tags"><span class="tag">기타</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">소상공인</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">소상공인의 온라인시장 진출 및 판로개척 지원을 위한「2026년 상품개선지원사업」을 다음과 같이 공고하오니, 많은 참여를 바랍니다. ☞ 온라인 판매가 가능한 일반 소비자용(B2C) 상품 -「소상공인기본법」제2조에 따른 소상공인 ☞ 진단 및 컨설팅, 패키지 디자인 또는 브랜드 디자인 개선ㆍ제작, 활용제작물 지원 등</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125507" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div></div>
+    </div>
+    <div id="panel-category" class="panel">
+      <div class="cat-btns"><button class="cat-btn active" data-cat-idx="0" onclick="bnbSelectCategory(0)">R&amp;D/기술개발 <span class="cat-btn-count">0건</span></button><button class="cat-btn" data-cat-idx="1" onclick="bnbSelectCategory(1)">수출·해외진출 <span class="cat-btn-count">7건</span></button><button class="cat-btn" data-cat-idx="2" onclick="bnbSelectCategory(2)">세제·금융 <span class="cat-btn-count">0건</span></button><button class="cat-btn" data-cat-idx="3" onclick="bnbSelectCategory(3)">고용·인력 <span class="cat-btn-count">0건</span></button><button class="cat-btn" data-cat-idx="4" onclick="bnbSelectCategory(4)">인증·특허 취득 <span class="cat-btn-count">0건</span></button><button class="cat-btn" data-cat-idx="5" onclick="bnbSelectCategory(5)">기타 <span class="cat-btn-count">3건</span></button></div>
+      <div class="cat-panel active" id="cat-panel-0"><p class="empty">이번 주 이 카테고리에 매칭된 지원사업이 없습니다.</p></div><div class="cat-panel" id="cat-panel-1">
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-normal">D-10</span>
+          <span class="badge badge-neutral">매칭율 58%</span>
+        </div>
+        <p class="title">2026년 KOMICS Thailand 참가기업 모집 공고</p>
+        <p class="org">한국콘텐츠진흥원</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-13 ~ 2026-08-31</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">중소기업</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">태국을 거점으로 동남아시아 주요 시장(싱가포르, 인도네시아, 말레이시아, 베트남, 필리핀 등) 진출(수출)을 위한 만화웹툰 특화 해외진출 지원 프로그램 운영하고자 '2026 KOMICS Thailand 참가기업 모집 공고'에 참여할 만화웹툰기업을 모집합니다. ☞ 태국을 거점으로 동남아시아 주요 시장(싱가포르, 인도네시아, 말레이시아, 베트남, 필리핀 등) 진출 목적이 명확한 국내 만화ㆍ웹툰 IP 보유 기업 또는 해외 비즈니스 권한을 위임받은 에이전시 - 플랫폼 유통 및 출판, 영상화, 게임, MD 등 확장 산업 전반에 걸쳐 동남아시아 시장 진출의 참여 목적이 명확한 기업 ※ 자세한 지원대상 공고문 참조 ☞ 비즈니스, 홍보마케팅, 기타(숙박) 등 지원 ※ 자세한 지원내용 공고문 참조</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125479" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-neutral">매칭율 42%</span>
+        </div>
+        <p class="title">2026년 해외 온라인플랫폼 활용지원 소상공인 모집 공고 2차</p>
+        <p class="org"></p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">상세 공고 확인 필요</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">2026년 「해외 온라인 플랫폼 활용지원」 사업 참여 소상공인 모집 공고(2차) 해외 온라인 플랫폼 활용 소상공인의 온라인 수출액 증대를 위해 2026년 '해외 온라인 플랫폼 활용지원' 사업에 참여할 소상공인을 모집합니다. □ 지원내용 : 해외 온라인 플랫폼 홍보·마케팅 지원 및 우수 소상공인 O2O기획전 지원 □ 지원대상 : 해외 온라인 플랫폼(아마존, 쇼피, 큐텐재팬)에 입점되어 있는 소상공인 * 단, 플랫폼에서 발생한 전년도 매출액에 따라 지원 내용 구분 □ 지원규모 : 소상공인 1,300개사 내외 - 수행기관(플랫폼)별 430개사 내외 □ 신청서류 : 모집공고 참조(5P 확인) 2026년 8월 14일 소상공인시장진흥공단 이사장 ※ 문의처 ※ - 수행기관(플랫폼) 문의처 수행기관 지원 플랫폼 문의처 굿먼데이 아마존 010-8051-8699 amz@goodmonday.me 오스브이 쇼피 031-8027-3997 support@osv81.com ESG경영지원센터 큐텐 재팬 1600-0712 help@esgbsc.com - 기타 사업문의 : 042-363-7825~6 - 시스템 문의(오류 등) : 1644-5302</span></p>
+        <a class="apply" href="https://www.sbiz24.kr/#/pbanc/812" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-neutral">매칭율 42%</span>
+        </div>
+        <p class="title">2026년 2차 해외 온라인플랫폼 활용지원 사업 참여 소상공인 모집 공고</p>
+        <p class="org">소상공인시장진흥공단</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">소상공인</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">해외 온라인 플랫폼 활용 소상공인의 온라인 수출액 증대를 위해 ’26년「해외 온라인 플랫폼 활용지원」사업 참여 소상공인을 모집합니다. ☞ 「소상공인 기본법」제2조에 따른 소상공인으로 신청일 기준 정상적으로 영업 중이며, 활용을 희망하는 해외 온라인 플랫폼(아마존, 쇼피, 큐텐재팬)에 旣 입점한 소상공인 ☞ 해외 온라인 플랫폼 홍보ㆍ마케팅 및 O2O 기획전 지원 ① (홍보ㆍ마케팅 지원) 총 4,375,000원(자부담 포함, 부가세 제외) 한도 내, 플랫폼 광고비ㆍ기획전 운영 및 간접홍보ㆍ컨설팅 등 지원 ② (O2O 기획전) 동 사업 수혜 업체 중, 우수성과 소상공인을 선별하여 O2O 기획전 참여 연계 지원</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125502" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-normal">D-21</span>
+          <span class="badge badge-faint">매칭율 25%</span>
+        </div>
+        <p class="title">2026년 AI무역인재양성 사업 2기 기업</p>
+        <p class="org">AI마케팅팀</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-09-11</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">상세 공고 확인 필요</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">상세 공고 확인 필요</span></p>
+        <a class="apply" href="https://www.kotra.or.kr/subList/20000020753/subhome/bizAply/selectBizMntInfoDetail.do?&amp;dtlBizMntNo=26ED00N&amp;cpbizYn=N" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-normal">D-21</span>
+          <span class="badge badge-faint">매칭율 25%</span>
+        </div>
+        <p class="title">2026년 AI무역인재양성 사업 2기_청년</p>
+        <p class="org">AI마케팅팀</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-09-11</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">상세 공고 확인 필요</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">상세 공고 확인 필요</span></p>
+        <a class="apply" href="https://www.kotra.or.kr/subList/20000020753/subhome/bizAply/selectBizMntInfoDetail.do?&amp;dtlBizMntNo=26ED00M&amp;cpbizYn=N" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-normal">D-31</span>
+          <span class="badge badge-faint">매칭율 25%</span>
+        </div>
+        <p class="title">2026 생성형 AI로 구축하는 글로벌 마케팅 온라인 과정(2차)</p>
+        <p class="org">KOTRA아카데미</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-13 ~ 2026-09-21</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">상세 공고 확인 필요</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">상세 공고 확인 필요</span></p>
+        <a class="apply" href="https://www.kotra.or.kr/subList/20000020753/subhome/bizAply/selectBizMntInfoDetail.do?&amp;dtlBizMntNo=26ED00E&amp;cpbizYn=N" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-faint">매칭율 25%</span>
+        </div>
+        <p class="title">2026년 일본 오사카(간사이) 지역 진출 지원사업 Plug in Osaka #12 참가 스타트업 모집 공고</p>
+        <p class="org">부산창조경제혁신센터</p>
+        <div class="tags"><span class="tag">수출·해외진출</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">창업벤처</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">(재)부산창조경제혁신센터에서는 국내 유망한 스타트업의 일본 간사이 지역 진출 및 현지 대ㆍ중견기업과의 1:1 밋업 기회 등을 제공하기 위해 「Plug in: Osaka #12」에 참여할 기업을 아래와 같이 모집하오니, 많은 관심과 참여 바랍니다. ☞ 일본(간사이) 진출을 희망하는 스타트업 - (전국 소재) 전국 소재 라이프사이언스 분야 스타트업 - (부산 소재) 부산 소재(본사, 지사, 연구소 등) 사업장을 보유한 라이프사이언스 분야 스타트업 - (모집분야) 라이프 사이언스(Life Sciences) ※ 자세한 지원대상 공고문 참조 ☞ 라이프 사이언스 분야 간사이 대ㆍ중견기업 및 CVC 대상 IR 피칭, 밋업, KBIC 연계 비즈니스 네트워킹, GSE 참관 등 지원 - 기업당 1인 왕복 항공료 실비 지원(최대 40만원), GSE 입장권(1개사/1매), 센터 투자ㆍ글로벌 진출 지원사업 등 후속 연계 지원</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125548" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div></div><div class="cat-panel" id="cat-panel-2"><p class="empty">이번 주 이 카테고리에 매칭된 지원사업이 없습니다.</p></div><div class="cat-panel" id="cat-panel-3"><p class="empty">이번 주 이 카테고리에 매칭된 지원사업이 없습니다.</p></div><div class="cat-panel" id="cat-panel-4"><p class="empty">이번 주 이 카테고리에 매칭된 지원사업이 없습니다.</p></div><div class="cat-panel" id="cat-panel-5">
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-accent">매칭율 100%</span>
+        </div>
+        <p class="title">2026년 4차 콘텐츠 제작 지원사업 참여기업 모집 공고</p>
+        <p class="org">한국중소벤처기업유통원</p>
+        <div class="tags"><span class="tag">기타</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">소상공인</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">소상공인의 온라인시장 진출 및 판로개척 지원을 위한「2026 콘텐츠 제작 지원사업」을 다음과 같이 공고하오니, 소상공인의 많은 참여를 바랍니다. ☞ 온라인으로 상품 판매 또는 서비스 예약을 제공하는 소상공인 ☞ 제품 소개 및 홍보 등을 위한 영상 등 콘텐츠 제작지원 - 소구조사, 콘텐즈 제작, 패키지 제공, A/S지원, AI구독권, 실습프로그램 지원</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125509" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-faint">매칭율 25%</span>
+        </div>
+        <p class="title">2026년 4차 상세페이지 제작지원사업 참여기업 모집 공고</p>
+        <p class="org">한국중소벤처기업유통원</p>
+        <div class="tags"><span class="tag">기타</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">소상공인</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">소상공인의 온라인시장 진출 및 판로개척 지원을 위한「2026년 상세페이지 제작지원사업」을 다음과 같이 공고 하오니, 많은 참여를 바랍니다. ☞ 소상공인이 보유한 온라인 판매가 가능한 B2C 상품 ☞ 진단 및 컨설팅, 사진 촬영, 소상공인 제품의 특장점을 반영한 상세페이지 제작 등 지원</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125512" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="dday dday-urgent">D-7</span>
+          <span class="badge badge-faint">매칭율 25%</span>
+        </div>
+        <p class="title">2026년 4차 소상공인 상품개선 지원사업(패키지ㆍ브랜드 디자인 개선ㆍ제작) 모집 공고</p>
+        <p class="org">한국중소벤처기업유통원</p>
+        <div class="tags"><span class="tag">기타</span><span class="tag">전국</span></div>
+        <p class="row"><span class="label">신청기간</span><span class="value">2026-08-14 ~ 2026-08-28</span></p>
+        <p class="row"><span class="label">모집대상</span><span class="value clamp target">소상공인</span></p>
+        <p class="row"><span class="label">지원내용</span><span class="value clamp content">소상공인의 온라인시장 진출 및 판로개척 지원을 위한「2026년 상품개선지원사업」을 다음과 같이 공고하오니, 많은 참여를 바랍니다. ☞ 온라인 판매가 가능한 일반 소비자용(B2C) 상품 -「소상공인기본법」제2조에 따른 소상공인 ☞ 진단 및 컨설팅, 패키지 디자인 또는 브랜드 디자인 개선ㆍ제작, 활용제작물 지원 등</span></p>
+        <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125507" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
+      </div></div>
+    </div>
     <footer>
       본 안내는 자동 매칭 결과이며, 정확한 자격요건은 담당 컨설턴트와 확인해주세요.<br>
       BnB컨설팅
     </footer>
   </div>
+  <script>
+    function bnbSwitchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.tab === tab); });
+      document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+      document.getElementById('panel-' + tab).classList.add('active');
+    }
+    function bnbSelectCategory(idx) {
+      document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.toggle('active', Number(b.dataset.catIdx) === idx); });
+      document.querySelectorAll('.cat-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.getElementById('cat-panel-' + idx).classList.add('active');
+    }
+  </script>
 </body>
 </html>
