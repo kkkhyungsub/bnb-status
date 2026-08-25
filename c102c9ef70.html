@@ -16,7 +16,8 @@
   header { margin-bottom: 16px; }
   header p.name { margin: 0; font-size: 18px; font-weight: 600; }
   header p.sub { margin: 4px 0 0; font-size: 13px; color: #6B6A63; }
-  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .stats { display: none; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .stats.active { display: grid; }
   .stat { background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 10px; padding: 12px 14px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
   .stat .num { font-size: 20px; font-weight: 600; }
@@ -102,7 +103,7 @@
       </svg>
       <span>본 안내는 자동 매칭 결과이며, 정확한 자격요건은 담당 컨설턴트와 확인해주세요.</span>
     </p>
-    <div class="stats">
+    <div id="stats-rank" class="stats active">
       <div class="stat">
         <div class="lbl">이번 주 매칭된 지원사업</div>
         <div class="num">4건</div>
@@ -110,6 +111,16 @@
       <div class="stat warn">
         <div class="lbl">마감임박(7일 이내)</div>
         <div class="num">1건</div>
+      </div>
+    </div>
+    <div id="stats-category" class="stats">
+      <div class="stat">
+        <div class="lbl">이번 주 신규 지원사업</div>
+        <div class="num">290건</div>
+      </div>
+      <div class="stat warn">
+        <div class="lbl">마감임박(7일 이내)</div>
+        <div class="num">112건</div>
       </div>
     </div>
     <div class="tabs">
@@ -3951,6 +3962,8 @@
       document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.tab === tab); });
       document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
       document.getElementById('panel-' + tab).classList.add('active');
+      document.querySelectorAll('.stats').forEach(function(s) { s.classList.remove('active'); });
+      document.getElementById('stats-' + tab).classList.add('active');
     }
     function bnbSelectCategory(idx) {
       document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.toggle('active', Number(b.dataset.catIdx) === idx); });
