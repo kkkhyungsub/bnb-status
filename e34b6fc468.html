@@ -75,8 +75,9 @@
     .card-grid, .cat-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     /* 카드 크기는 기존(330px)의 3/4 수준으로, 글자 크기는 원래(모바일과 동일) 크기로 유지
        (2026-08-20). 지원내용만 2줄로 다시 늘려달라는 요청(2026-08-20)으로 높이를 살짝
-       (248→270px) 더 늘려서 늘어난 줄이 잘리지 않게 함 - 모집대상은 계속 1줄 유지. */
-    .card { margin-bottom: 0; height: 270px; box-sizing: border-box; overflow: hidden;
+       (248→270px) 더 늘려서 늘어난 줄이 잘리지 않게 함 - 모집대상은 계속 1줄 유지.
+       AI 추천 이유 박스가 추가되면서 내용이 잘리는 문제(2026-08-31)로 270→330px로 재확장. */
+    .card { margin-bottom: 0; height: 330px; box-sizing: border-box; overflow: hidden;
       display: flex; flex-direction: column; padding: 10px 12px; }
     .card .card-top { margin-bottom: 5px; }
     .card .title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -93,6 +94,9 @@
         background: var(--bg-accent, #EBF5FF); border-radius: 8px;
         padding: 8px 10px; margin: 6px 0 4px; font-size: 12px;
         color: var(--text-primary); line-height: 1.4;
+      }
+      .ai-reason-text {
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
       }
       .ai-icon { flex-shrink: 0; color: #3B82F6; font-size: 13px; margin-top: 1px; }
 </style>
@@ -148,7 +152,7 @@
         <p class="row"><span class="label">신청기간</span><span class="value">2026-09-01 ~ 2026-09-10</span></p>
         <p class="row"><span class="label">모집대상</span><span class="value clamp target">예술산업분야 예술기업 및 예술 프로젝트 / 예술기업 보증, 예술 프로젝트 보증(기업당 최대 통합 한도는 10억 원 이내) 지원</span></p>
         <p class="row"><span class="label">지원내용</span><span class="value clamp content">문화체육관광부, (재)예술경영지원센터, 기술보증기금은 예술기업 대상으로 보증지원을 추진하여 예술산업의 지속가능한 성장 및 미래 경쟁력을 제고하고자 &lt;2026 예술산업보증&gt;을 진행합니다. 관심 있는 예술기업의 많은 참여 바랍니다. ☞ 예술산업분야 예술기업 및 예술 프로젝트 - 분야 : 공연예술, 시각예술, 문학, 그 외 예술 일반 등 ☞ 예술기업 보증, 예술 프로젝트 보증(기업당 최대 통합 한도는 10억 원 이내) 지원 ※ 자세한 지원내용 공고문 참조</span></p>
-        <div class="ai-reason"><span class="ai-icon">✶</span>공연기획업의 핵심 업종과 예술산업보증이 직접 부합하며, 공연 관련 예술기업 대상의 보증지원사업임</div>
+        <div class="ai-reason"><span class="ai-icon">✶</span><span class="ai-reason-text">공연기획업의 핵심 업종과 직접 관련된 예술산업보증 사업으로, 공연기획 및 예술기업 지원에 부합</span></div>
         <a class="apply" href="https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000125914" target="_blank" rel="noopener" title="신청 바로가기" aria-label="신청 바로가기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a>
       </div></div>
     </div>
