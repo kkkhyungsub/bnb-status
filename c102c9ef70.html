@@ -85,12 +85,16 @@
     .card-grid .card { height: 330px; }
     .cat-panel .card { height: 270px; }
     .card .card-top { margin-bottom: 5px; }
-    .card .title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    /* title/지원내용은 line-clamp만으로는 "최대 N줄"이지 "항상 N줄"이 아니라서, 글자 수가
+       짧은 카드는 그만큼 아래 요소(AI 추천사유 박스 등)가 위로 붙어 카드마다 위치가 들쭉날쭉
+       해짐(2026-09-02, 사용자 피드백) - min-height로 항상 N줄 분량을 확보해서 고정. */
+    .card .title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      min-height: 40px; }
     .card .org { margin: 2px 0 6px; }
     .card .tags { gap: 4px; margin-bottom: 6px; }
     .card .row { margin: 0 0 2px; }
     .card .value.target { -webkit-line-clamp: 1; }
-    .card .value.content { -webkit-line-clamp: 2; }
+    .card .value.content { -webkit-line-clamp: 2; min-height: 39px; }
     .card .apply { margin-top: auto; }
   }
 
